@@ -1,31 +1,35 @@
-import React from 'react';
+import React, { useReducer } from 'react';
 import './App.css';
+import { tasksReducer } from './model/tasks-reducer';
+import { v1 } from 'uuid';
 
-type Task = {
+export type Task = {
   id: string
   title: string
   status: boolean
 }
 
 function App() {
+  const [tasks, dispatchTasks] = useReducer(tasksReducer, [
+    { id: v1(), status: false, title: 'Тестовое задание' },
+    { id: v1(), status: true, title: 'Прекрасный код' },
+    { id: v1(), status: false, title: 'Покрытие тестами' }
+  ])
+
   return (
     <div className='container'>
       <h1>todos</h1>
       <div className='wrapper'>
-        <input type='text' name='title' className='title-input' placeholder='What needs to be done?'/>
+        <input type='text' name='title' className='title-input' placeholder='What needs to be done?' />
         <ul className='task-list'>
-          <li className='task-item'>
-            <input type='checkbox' name='status' className='task-item_rounded-checkbox' />
-            <span className='task-item_title'>Тестовое задание</span>
-          </li>
-          <li className='task-item'>
-            <input type='checkbox' name='status' className='task-item_rounded-checkbox' />
-            <span className='task-item_title'>Прекрасный код</span>
-          </li>
-          <li className='task-item'>
-            <input type='checkbox' name='status' className='task-item_rounded-checkbox' />
-            <span className='task-item_title'>Покрытие тестами</span>
-          </li>
+          {
+            tasks.map(task => {
+              return <li className='task-item' key={task.id}>
+                <input type='checkbox' name='status' className='task-item_rounded-checkbox' checked={task.status} />
+                <span className='task-item_title'>{task.title}</span>
+              </li>
+            })
+          }
         </ul>
       </div>
       <footer className='footer-wrapper'>
