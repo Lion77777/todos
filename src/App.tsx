@@ -1,6 +1,12 @@
 import React from 'react';
 import './App.css';
 
+type Task = {
+  id: string
+  title: string
+  status: boolean
+}
+
 function App() {
   return (
     <div className='container'>
