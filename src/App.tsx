@@ -1,5 +1,4 @@
 import React from 'react';
-import logo from './logo.svg';
 import './App.css';
 
 function App() {
@@ -7,19 +6,19 @@ function App() {
     <div className='container'>
       <h1>todos</h1>
       <div className='wrapper'>
-        <input type='text' name='title' className='' />
-        <ul>
-          <li>
-            <input type='checkbox' name='status' />
-            Тестовое задание
+        <input type='text' name='title' className='title-input' placeholder='What needs to be done?'/>
+        <ul className='task-list'>
+          <li className='task-item'>
+            <input type='checkbox' name='status' className='task-item_rounded-checkbox' />
+            <span className='task-item_title'>Тестовое задание</span>
           </li>
-          <li>
-            <input type='checkbox' name='status' />
-            Прекрасный код
+          <li className='task-item'>
+            <input type='checkbox' name='status' className='task-item_rounded-checkbox' />
+            <span className='task-item_title'>Прекрасный код</span>
           </li>
-          <li>
-            <input type='checkbox' name='status' />
-            Покрытие тестами
+          <li className='task-item'>
+            <input type='checkbox' name='status' className='task-item_rounded-checkbox' />
+            <span className='task-item_title'>Покрытие тестами</span>
           </li>
         </ul>
       </div>
@@ -31,7 +30,7 @@ function App() {
             <button type='button'>Active</button>
             <button type='button'>Completed</button>
           </div>
-          <button type='button'>Clear completed</button>
+          <button type='button' className='clear'>Clear completed</button>
         </div>
       </footer>
     </div>
