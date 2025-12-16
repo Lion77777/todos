@@ -1,5 +1,5 @@
 import { v1 } from "uuid"
-import { changeTaskStatusAC, createTaskAC, tasksReducer } from "../tasks-reducer"
+import { changeTaskStatusAC, clearCompletedTasksAC, createTaskAC, tasksReducer } from "../tasks-reducer"
 import { Task } from "../../App"
 
 let startState: Task[]
@@ -27,4 +27,11 @@ test('correct task should change its status', () => {
 
     expect(endState[0].status).toBeTruthy()
     expect(endState.length).toBe(startState.length)
+})
+
+test('clear completed tasks', () => {
+    const endState = tasksReducer(startState, clearCompletedTasksAC(true))
+
+    expect(endState.length).toBe(2)
+    expect(endState[1].status).toBeFalsy()
 })
