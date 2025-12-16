@@ -1,4 +1,4 @@
-import React, { useReducer } from 'react';
+import React, { ChangeEvent, useReducer, useState } from 'react';
 import './App.css';
 import { tasksReducer } from './model/tasks-reducer';
 import { v1 } from 'uuid';
@@ -15,12 +15,17 @@ function App() {
     { id: v1(), status: true, title: 'Прекрасный код' },
     { id: v1(), status: false, title: 'Покрытие тестами' }
   ])
+  const [title, setTitle] = useState('')
+
+  const handleTitle = (e: ChangeEvent<HTMLInputElement>) => {
+    setTitle(e.currentTarget.value)
+  }
 
   return (
     <div className='container'>
       <h1>todos</h1>
       <div className='wrapper'>
-        <input type='text' name='title' className='title-input' placeholder='What needs to be done?' />
+        <input type='text' name='title' value={title} onChange={handleTitle} className='title-input' placeholder='What needs to be done?' />
         <ul className='task-list'>
           {
             tasks.map(task => {
