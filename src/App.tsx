@@ -1,6 +1,6 @@
 import { ChangeEvent, KeyboardEvent, useReducer, useState } from 'react';
 import './App.css';
-import { changeTaskStatusAC, createTaskAC, tasksReducer } from './model/tasks-reducer';
+import { changeTaskStatusAC, clearCompletedTasksAC, createTaskAC, tasksReducer } from './model/tasks-reducer';
 import { v1 } from 'uuid';
 
 export type Task = {
@@ -72,6 +72,12 @@ function App() {
     return ''
   }
 
+  const clearCompletedTasks = () => {
+    const updatedTasks = tasks.filter(task => !task.status)
+
+    dispatchTasks(clearCompletedTasksAC(true))
+  }
+
   return (
     <div className='container'>
       <h1>todos</h1>
@@ -107,7 +113,7 @@ function App() {
             <button type='button' onClick={() => setFilter('active')}>Active</button>
             <button type='button' onClick={() => setFilter('completed')}>Completed</button>
           </div>
-          <button type='button' className='clear'>Clear completed</button>
+          <button type='button' className='clear' onClick={clearCompletedTasks}>Clear completed</button>
         </div>
       </footer>
     </div>
