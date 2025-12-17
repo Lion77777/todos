@@ -1,6 +1,6 @@
-import React, { ChangeEvent, useReducer, useState } from 'react';
+import { ChangeEvent, KeyboardEvent, useReducer, useState } from 'react';
 import './App.css';
-import { tasksReducer } from './model/tasks-reducer';
+import { createTaskAC, tasksReducer } from './model/tasks-reducer';
 import { v1 } from 'uuid';
 
 export type Task = {
@@ -21,11 +21,33 @@ function App() {
     setTitle(e.currentTarget.value)
   }
 
+  const createTask = () => {
+    const trimmedTitle = title.trim()
+
+    if (trimmedTitle) {
+      dispatchTasks(createTaskAC(trimmedTitle))
+    }
+
+    setTitle('')
+  }
+
+  const createTaskOnEnter = (e: KeyboardEvent<HTMLInputElement>) => {
+    if (e.key === 'Enter') {
+      createTask()
+    }
+  }
+
   return (
     <div className='container'>
       <h1>todos</h1>
       <div className='wrapper'>
-        <input type='text' name='title' value={title} onChange={handleTitle} className='title-input' placeholder='What needs to be done?' />
+        <input type='text'
+          name='title'
+          value={title}
+          onChange={handleTitle}
+          onKeyDown={createTaskOnEnter}
+          className='title-input'
+          placeholder='What needs to be done?' />
         <ul className='task-list'>
           {
             tasks.map(task => {
