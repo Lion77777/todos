@@ -3,6 +3,7 @@ import './App.css';
 import { changeTaskStatusAC, clearCompletedTasksAC, createTaskAC, tasksReducer } from './model/tasks-reducer';
 import { v1 } from 'uuid';
 import { Main } from './components/Main';
+import { Footer } from './components/Footer';
 
 export type Task = {
   id: string
@@ -29,12 +30,6 @@ function App() {
     dispatchTasks(changeTaskStatusAC({ id, status }))
   }
 
-  const countActive = () => {
-    const activeTasks = tasks.filter(task => !task.status)
-
-    return activeTasks.length
-  }
-
   if (filter === 'active') {
     filteredTasks = tasks.filter(task => !task.status)
   }
@@ -46,21 +41,15 @@ function App() {
     dispatchTasks(clearCompletedTasksAC(true))
   }
 
+  const filterTasks = (filter: FilterValues) => {
+    setFilter(filter)
+  }
+
   return (
     <div className='container'>
       <h1>todos</h1>
       <Main createTask={createTask} tasks={filteredTasks} changeTaskStatus={changeTaskStatus} filter={filter} />
-      <footer className='footer-wrapper'>
-        <div className='footer'>
-          <span className='count'>{countActive()} items left</span>
-          <div className='filters'>
-            <button type='button' onClick={() => setFilter('all')}>All</button>
-            <button type='button' onClick={() => setFilter('active')}>Active</button>
-            <button type='button' onClick={() => setFilter('completed')}>Completed</button>
-          </div>
-          <button type='button' className='clear' onClick={clearCompletedTasks}>Clear completed</button>
-        </div>
-      </footer>
+      <Footer tasks={filteredTasks} clearCompletedTasks={clearCompletedTasks} filterTasks={filterTasks} />
     </div>
   );
 }
