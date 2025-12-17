@@ -41,9 +41,18 @@ h1 {
   width: 100%;
 }
 
+.title-input-error {
+  border: 1px solid red;
+}
+
 .title-input::placeholder {
   color: #E7E7E7;
   font-style: italic;
+}
+
+.tasks-absent {
+  color: black;
+  font-size: 18px;
 }
 
 .task-list {
@@ -199,4 +208,8 @@ h1 {
   color: #999;
   cursor: pointer;
   padding: 4px 8px;
+}
+
+.error-message {
+  color: red;
 }

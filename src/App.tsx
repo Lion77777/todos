@@ -19,10 +19,12 @@ function App() {
   ])
   const [title, setTitle] = useState('')
   const [filter, setFilter] = useState('all')
+  const [error, setError] = useState<string | null>(null)
   let filteredTasks = tasks
 
   const handleTitle = (e: ChangeEvent<HTMLInputElement>) => {
     setTitle(e.currentTarget.value)
+    setError('')
   }
 
   const createTask = () => {
@@ -30,6 +32,8 @@ function App() {
 
     if (trimmedTitle) {
       dispatchTasks(createTaskAC(trimmedTitle))
+    } else {
+      setError('Please enter task title')
     }
 
     setTitle('')
@@ -73,8 +77,6 @@ function App() {
   }
 
   const clearCompletedTasks = () => {
-    const updatedTasks = tasks.filter(task => !task.status)
-
     dispatchTasks(clearCompletedTasksAC(true))
   }
 
@@ -87,8 +89,10 @@ function App() {
           value={title}
           onChange={handleTitle}
           onKeyDown={createTaskOnEnter}
-          className='title-input'
-          placeholder='What needs to be done?' />
+          className={error ? 'title-input-error title-input' : 'title-input'}
+          placeholder='What needs to be done?'
+        />
+        {error && <p className='error-message'>{error}</p>}
         <ul className='task-list'>
           {
             showTaskAbsentMessage(filter) ||
