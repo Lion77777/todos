@@ -1,6 +1,6 @@
 import { ChangeEvent, KeyboardEvent, useReducer, useState } from 'react';
 import './App.css';
-import { createTaskAC, tasksReducer } from './model/tasks-reducer';
+import { changeTaskStatusAC, createTaskAC, tasksReducer } from './model/tasks-reducer';
 import { v1 } from 'uuid';
 
 export type Task = {
@@ -37,6 +37,10 @@ function App() {
     }
   }
 
+  const changeTaskStatus = (id: string, status: boolean) => {
+    dispatchTasks(changeTaskStatusAC({ id, status }))
+  }
+
   return (
     <div className='container'>
       <h1>todos</h1>
@@ -51,8 +55,12 @@ function App() {
         <ul className='task-list'>
           {
             tasks.map(task => {
+              const changeTaskStatusHandler = (e: ChangeEvent<HTMLInputElement>) => {
+                changeTaskStatus(task.id, e.currentTarget.checked)
+              }
+
               return <li className='task-item' key={task.id}>
-                <input type='checkbox' name='status' className='task-item_rounded-checkbox' checked={task.status} />
+                <input type='checkbox' name='status' onChange={changeTaskStatusHandler} className='task-item_rounded-checkbox' checked={task.status} />
                 <span className='task-item_title'>{task.title}</span>
               </li>
             })
