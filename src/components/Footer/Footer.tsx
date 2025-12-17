@@ -1,4 +1,8 @@
 import { FilterValues, Task } from "../../App"
+import Box from '@mui/material/Box'
+import Paper from "@mui/material/Paper"
+import Button from "@mui/material/Button"
+import styles from './Footer.module.css'
 
 type Props = {
     tasks: Task[]
@@ -16,16 +20,52 @@ export const Footer = (props: Props) => {
     }
 
     return (
-        <footer className='footer-wrapper'>
-            <div className='footer'>
-                <span className='count'>{countActive()} items left</span>
-                <div className='filters'>
-                    <button type='button' onClick={() => filterTasks('all')}>All</button>
-                    <button type='button' onClick={() => filterTasks('active')}>Active</button>
-                    <button type='button' onClick={() => filterTasks('completed')}>Completed</button>
-                </div>
-                <button type='button' className='clear' onClick={clearCompletedTasks}>Clear completed</button>
-            </div>
-        </footer>
+        <Box className={styles.footerWrapper}>
+            <Paper className={styles.footer}
+                sx={{
+                    borderRadius: 0,
+                    boxShadow: "0px 4px 6px rgba(0,0,0,0.5)"
+                }}
+            >
+                <Box sx={{ color: "text.secondary" }}>{countActive()} items left</Box>
+                <Box className={styles.filters}>
+                    <Button
+                        size="small"
+                        variant="outlined"
+                        onClick={() => filterTasks('all')}
+                        sx={{ textTransform: "none" }}
+                    >
+                        All
+                    </Button>
+                    <Button
+                        size="small"
+                        variant="text"
+                        onClick={() => filterTasks('active')}
+                        sx={{ textTransform: "none" }}
+                    >
+                        Active
+                    </Button>
+                    <Button
+                        size="small"
+                        variant="text"
+                        onClick={() => filterTasks('completed')}
+                        sx={{ textTransform: "none" }}
+                    >
+                        Completed
+                    </Button>
+                </Box>
+                <Button
+                    size="small"
+                    variant="text"
+                    onClick={clearCompletedTasks}
+                    sx={{
+                        textTransform: "none",
+                        color: "text.secondary",
+                    }}
+                >
+                    Clear completed
+                </Button>
+            </Paper>
+        </Box>
     )
 }

@@ -91,31 +91,5 @@ export const Main = (props: Props) => {
                 }
             </List>
         </Box>
-        // <div className='wrapper'>
-        // <input type='text'
-        //     name='title'
-        //     value={title}
-        //     onChange={handleTitle}
-        //     onKeyDown={createTaskOnEnter}
-        //     className={error ? 'title-input-error title-input' : 'title-input'}
-        //     placeholder='What needs to be done?'
-        // />
-        //     {error && <p className='error-message'>{error}</p>}
-        //     <ul className='task-list'>
-        //         {
-        //             showTaskAbsentMessage(filter) ||
-        //             tasks.map(task => {
-        //                 const changeTaskStatusHandler = (e: ChangeEvent<HTMLInputElement>) => {
-        //                     changeTaskStatus(task.id, e.currentTarget.checked)
-        //                 }
-
-        //                 return <li className='task-item' key={task.id}>
-        // <input type='checkbox' name='status' onChange={changeTaskStatusHandler} className='task-item_rounded-checkbox' checked={task.status} />
-        //                     <span className='task-item_title'>{task.title}</span>
-        //                 </li>
-        //             })
-        //         }
-        //     </ul>
-        // </div>
     )
 }
