@@ -16,6 +16,7 @@ function App() {
     { id: v1(), status: false, title: 'Покрытие тестами' }
   ])
   const [title, setTitle] = useState('')
+  const [active, setActive] = useState(tasks.length)
 
   const handleTitle = (e: ChangeEvent<HTMLInputElement>) => {
     setTitle(e.currentTarget.value)
@@ -39,6 +40,12 @@ function App() {
 
   const changeTaskStatus = (id: string, status: boolean) => {
     dispatchTasks(changeTaskStatusAC({ id, status }))
+  }
+
+  const countActive = () => {
+    const activeTasks = tasks.filter(task => !task.status)
+
+    return activeTasks.length
   }
 
   return (
@@ -69,7 +76,7 @@ function App() {
       </div>
       <footer className='footer-wrapper'>
         <div className='footer'>
-          <span className='count'>2 items left</span>
+          <span className='count'>{countActive()} items left</span>
           <div className='filters'>
             <button type='button'>All</button>
             <button type='button'>Active</button>
