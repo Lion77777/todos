@@ -9,6 +9,8 @@ export type Task = {
   status: boolean
 }
 
+export type FilterValues = 'all' | 'active' | 'completed'
+
 function App() {
   const [tasks, dispatchTasks] = useReducer(tasksReducer, [
     { id: v1(), status: false, title: 'Тестовое задание' },
@@ -16,7 +18,8 @@ function App() {
     { id: v1(), status: false, title: 'Покрытие тестами' }
   ])
   const [title, setTitle] = useState('')
-  const [active, setActive] = useState(tasks.length)
+  const [filter, setFilter] = useState('all')
+  let filteredTasks = tasks
 
   const handleTitle = (e: ChangeEvent<HTMLInputElement>) => {
     setTitle(e.currentTarget.value)
@@ -48,6 +51,27 @@ function App() {
     return activeTasks.length
   }
 
+  if (filter === 'active') {
+    filteredTasks = tasks.filter(task => !task.status)
+  }
+  if (filter === 'completed') {
+    filteredTasks = tasks.filter(task => task.status)
+  }
+
+  const showTaskAbsentMessage = (filter: string) => {
+    if (filter === 'active' && filteredTasks.length === 0) {
+      return (<p className='tasks-absent'>No active tasks</p>)
+    }
+    if (filter === 'completed' && filteredTasks.length === 0) {
+      return (<p className='tasks-absent'>No completed tasks</p>)
+    }
+    if (filter === 'all' && filteredTasks.length === 0) {
+      return (<p className='tasks-absent'>There are no tasks</p>)
+    }
+
+    return ''
+  }
+
   return (
     <div className='container'>
       <h1>todos</h1>
@@ -61,7 +85,8 @@ function App() {
           placeholder='What needs to be done?' />
         <ul className='task-list'>
           {
-            tasks.map(task => {
+            showTaskAbsentMessage(filter) ||
+            filteredTasks.map(task => {
               const changeTaskStatusHandler = (e: ChangeEvent<HTMLInputElement>) => {
                 changeTaskStatus(task.id, e.currentTarget.checked)
               }
@@ -78,9 +103,9 @@ function App() {
         <div className='footer'>
           <span className='count'>{countActive()} items left</span>
           <div className='filters'>
-            <button type='button'>All</button>
-            <button type='button'>Active</button>
-            <button type='button'>Completed</button>
+            <button type='button' onClick={() => setFilter('all')}>All</button>
+            <button type='button' onClick={() => setFilter('active')}>Active</button>
+            <button type='button' onClick={() => setFilter('completed')}>Completed</button>
           </div>
           <button type='button' className='clear'>Clear completed</button>
         </div>
