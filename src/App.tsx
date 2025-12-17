@@ -1,7 +1,8 @@
-import { ChangeEvent, KeyboardEvent, useReducer, useState } from 'react';
+import { useReducer, useState } from 'react';
 import './App.css';
 import { changeTaskStatusAC, clearCompletedTasksAC, createTaskAC, tasksReducer } from './model/tasks-reducer';
 import { v1 } from 'uuid';
+import { Main } from './components/Main';
 
 export type Task = {
   id: string
@@ -17,32 +18,11 @@ function App() {
     { id: v1(), status: true, title: 'Прекрасный код' },
     { id: v1(), status: false, title: 'Покрытие тестами' }
   ])
-  const [title, setTitle] = useState('')
-  const [filter, setFilter] = useState('all')
-  const [error, setError] = useState<string | null>(null)
+  const [filter, setFilter] = useState<FilterValues>('all')
   let filteredTasks = tasks
 
-  const handleTitle = (e: ChangeEvent<HTMLInputElement>) => {
-    setTitle(e.currentTarget.value)
-    setError('')
-  }
-
-  const createTask = () => {
-    const trimmedTitle = title.trim()
-
-    if (trimmedTitle) {
-      dispatchTasks(createTaskAC(trimmedTitle))
-    } else {
-      setError('Please enter task title')
-    }
-
-    setTitle('')
-  }
-
-  const createTaskOnEnter = (e: KeyboardEvent<HTMLInputElement>) => {
-    if (e.key === 'Enter') {
-      createTask()
-    }
+  const createTask = (title: string) => {
+    dispatchTasks(createTaskAC(title))
   }
 
   const changeTaskStatus = (id: string, status: boolean) => {
@@ -62,20 +42,6 @@ function App() {
     filteredTasks = tasks.filter(task => task.status)
   }
 
-  const showTaskAbsentMessage = (filter: string) => {
-    if (filter === 'active' && filteredTasks.length === 0) {
-      return (<p className='tasks-absent'>No active tasks</p>)
-    }
-    if (filter === 'completed' && filteredTasks.length === 0) {
-      return (<p className='tasks-absent'>No completed tasks</p>)
-    }
-    if (filter === 'all' && filteredTasks.length === 0) {
-      return (<p className='tasks-absent'>There are no tasks</p>)
-    }
-
-    return ''
-  }
-
   const clearCompletedTasks = () => {
     dispatchTasks(clearCompletedTasksAC(true))
   }
@@ -83,32 +49,7 @@ function App() {
   return (
     <div className='container'>
       <h1>todos</h1>
-      <div className='wrapper'>
-        <input type='text'
-          name='title'
-          value={title}
-          onChange={handleTitle}
-          onKeyDown={createTaskOnEnter}
-          className={error ? 'title-input-error title-input' : 'title-input'}
-          placeholder='What needs to be done?'
-        />
-        {error && <p className='error-message'>{error}</p>}
-        <ul className='task-list'>
-          {
-            showTaskAbsentMessage(filter) ||
-            filteredTasks.map(task => {
-              const changeTaskStatusHandler = (e: ChangeEvent<HTMLInputElement>) => {
-                changeTaskStatus(task.id, e.currentTarget.checked)
-              }
-
-              return <li className='task-item' key={task.id}>
-                <input type='checkbox' name='status' onChange={changeTaskStatusHandler} className='task-item_rounded-checkbox' checked={task.status} />
-                <span className='task-item_title'>{task.title}</span>
-              </li>
-            })
-          }
-        </ul>
-      </div>
+      <Main createTask={createTask} tasks={filteredTasks} changeTaskStatus={changeTaskStatus} filter={filter} />
       <footer className='footer-wrapper'>
         <div className='footer'>
           <span className='count'>{countActive()} items left</span>
