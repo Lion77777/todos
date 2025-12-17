@@ -2,8 +2,8 @@ import { useReducer, useState } from 'react';
 import './App.css';
 import { changeTaskStatusAC, clearCompletedTasksAC, createTaskAC, tasksReducer } from './model/tasks-reducer';
 import { v1 } from 'uuid';
-import { Main } from './components/Main';
-import { Footer } from './components/Footer';
+import { Main } from './components/Main/Main';
+import { Footer } from './components/Footer/Footer';
 
 export type Task = {
   id: string

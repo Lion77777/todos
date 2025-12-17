@@ -18,16 +18,6 @@ h1 {
   margin: 0 0 25px 0;
 }
 
-.wrapper {
-  background-color: #fff;
-  box-shadow: 0px 3px 9px rgba(0, 0, 0, 0.5);
-
-  display: flex;
-  flex-direction: column;
-
-  position: relative;
-}
-
 .title-input {
   align-self: flex-start;
   background: url('./assets/arrow-down-angle-svgrepo-com.svg') no-repeat left 15px center;
@@ -48,38 +38,6 @@ h1 {
 .title-input::placeholder {
   color: #E7E7E7;
   font-style: italic;
-}
-
-.tasks-absent {
-  color: black;
-  font-size: 18px;
-}
-
-.task-list {
-  margin: 0;
-  padding: 0;
-}
-
-.task-item {
-  border-bottom: 2px solid #EBEBEB;
-
-  display: flex;
-  align-items: center;
-  justify-content: flex-start;
-
-  font-size: 18px;
-  padding: 15px 15px;
-}
-
-.task-item:last-child {
-  border: none;
-}
-
-.task-item_title {
-  color: #000;
-  font-family: 'AvenirNextCyr-Regular';
-  font-size: 20px;
-  margin-left: 15px;
 }
 
 .task-item_rounded-checkbox {
