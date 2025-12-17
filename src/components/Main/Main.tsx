@@ -6,6 +6,7 @@ import List from "@mui/material/List"
 import ListItem from "@mui/material/ListItem"
 import styles from './Main.module.css'
 import { CustomTextField } from "../CustomTextField"
+import { RoundedCheckbox } from "../RoundedCheckbox"
 
 type Props = {
     createTask: (title: string) => void
@@ -79,8 +80,7 @@ export const Main = (props: Props) => {
 
                         return (
                             <ListItem key={task.id} className={styles.taskItem} sx={{ paddingLeft: "60px" }}>
-                                <input type='checkbox' name='status' onChange={changeTaskStatusHandler} className='task-item_rounded-checkbox' checked={task.status} />
-
+                                <RoundedCheckbox checked={task.status} onChange={changeTaskStatusHandler} />
                                 <Typography className={task.status ? styles.checked : styles.taskItemTitle}
                                     sx={{ fontSize: "20px" }}>
                                     {task.title}
