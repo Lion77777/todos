@@ -18,28 +18,6 @@ h1 {
   margin: 0 0 25px 0;
 }
 
-.title-input {
-  align-self: flex-start;
-  background: url('./assets/arrow-down-angle-svgrepo-com.svg') no-repeat left 15px center;
-  border: none;
-  border-bottom: 2px solid #EBEBEB;
-  color: rgba(0, 0, 0, 0.5);
-  box-sizing: border-box;
-  font-size: 18px;
-  outline: none;
-  padding: 20px 20px 20px 50px;
-  width: 100%;
-}
-
-.title-input-error {
-  border: 1px solid red;
-}
-
-.title-input::placeholder {
-  color: #E7E7E7;
-  font-style: italic;
-}
-
 .task-item_rounded-checkbox {
   appearance: none;
   -webkit-appearance: none;

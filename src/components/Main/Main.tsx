@@ -5,6 +5,7 @@ import Typography from "@mui/material/Typography"
 import List from "@mui/material/List"
 import ListItem from "@mui/material/ListItem"
 import styles from './Main.module.css'
+import { CustomTextField } from "../CustomTextField"
 
 type Props = {
     createTask: (title: string) => void
@@ -57,14 +58,11 @@ export const Main = (props: Props) => {
 
     return (
         <Box className={styles.wrapper} >
-
-            <input type='text'
-                name='title'
-                value={title}
+            <CustomTextField placeholder="What needs to be done?"
+                name="title"
                 onChange={handleTitle}
                 onKeyDown={createTaskOnEnter}
-                className={error ? 'title-input-error title-input' : 'title-input'}
-                placeholder='What needs to be done?'
+                value={title}
             />
             {error &&
                 <Typography variant="body2" color="error" className={styles.errorMessage}>
@@ -81,8 +79,8 @@ export const Main = (props: Props) => {
 
                         return (
                             <ListItem key={task.id} className={styles.taskItem} sx={{ paddingLeft: "60px" }}>
-                            <input type='checkbox' name='status' onChange={changeTaskStatusHandler} className='task-item_rounded-checkbox' checked={task.status} />
-                                
+                                <input type='checkbox' name='status' onChange={changeTaskStatusHandler} className='task-item_rounded-checkbox' checked={task.status} />
+
                                 <Typography className={task.status ? styles.checked : styles.taskItemTitle}
                                     sx={{ fontSize: "20px" }}>
                                     {task.title}
@@ -112,7 +110,7 @@ export const Main = (props: Props) => {
         //                 }
 
         //                 return <li className='task-item' key={task.id}>
-                            // <input type='checkbox' name='status' onChange={changeTaskStatusHandler} className='task-item_rounded-checkbox' checked={task.status} />
+        // <input type='checkbox' name='status' onChange={changeTaskStatusHandler} className='task-item_rounded-checkbox' checked={task.status} />
         //                     <span className='task-item_title'>{task.title}</span>
         //                 </li>
         //             })
